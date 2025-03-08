@@ -1,0 +1,89 @@
+/* Centraliza a tela de login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #1da1f2, #007bff);
+  }
+
+/* Estiliza a caixa do login */
+.login-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* Estiliza o título "Taskara" */
+.login-logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1da1f2;
+    margin-bottom: 10px;
+}
+
+
+/* Estiliza os campos de entrada */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Ajusta os rótulos dos inputs */
+.input-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Garante que os inputs tenham o mesmo tamanho */
+.input-group input,
+.password-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Ajusta o campo de senha com ícone */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ajusta a posição do ícone dentro do campo de senha */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #777;
+    font-size: 18px;
+    padding: 10px;
+}
+
+/* Estiliza o botão */
+.button-login {
+    width: 100%;
+    background-color: #1da1f2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #0d8ddc;
+}
