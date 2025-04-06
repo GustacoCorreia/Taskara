@@ -246,17 +246,6 @@ function TaskList() {
           </div>
         </div>
       )}
-
-      <div className="user-menu">
-        <button onClick={toggleMenu} className="user-button">👤</button>
-        {isMenuOpen && (
-          <div className="dropdown-menu">
-            <button onClick={handleLogout} className="logout-button">
-              🚪 Sair
-            </button>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
