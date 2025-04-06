@@ -4,7 +4,7 @@ from .models import Task
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'title', 'description', 'completed']
+        fields = ['id', 'title', 'description', 'completed', 'is_note']  # adicionamos 'is_note'
 
     def create(self, validated_data):
         user = self.context['request'].user

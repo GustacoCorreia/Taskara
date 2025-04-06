@@ -1,0 +1,61 @@
+.notes-wrapper {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f7fa;
+  }
+  
+  .notes-content {
+    flex-grow: 1;
+    margin-left: 260px;
+    padding: 40px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  
+  .notes-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007bff; /* Azul padrão */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .notes-editor {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  
+  .ql-editor {
+    min-height: 200px;
+    font-size: 1.1rem;
+  }
+  
+  .ql-toolbar {
+    margin-bottom: 10px;
+  }
+  
+  .save-status {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .saving {
+    color: #ffa500;
+  }
+  
+  .saved {
+    color: green;
+  }
+  
+  .error {
+    color: red;
+  }
+  

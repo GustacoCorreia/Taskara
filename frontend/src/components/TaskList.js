@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Sidebar from "./Sidebar";
@@ -32,41 +32,50 @@ function TaskList() {
     return filteredTasks;
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    fetchTasks(token);
-  }, [navigate]);
+  // Função para obter o token
+  const getToken = () => {
+    return localStorage.getItem("access") || localStorage.getItem("token");
+  };
 
-  const fetchTasks = async (token) => {
+  const fetchTasks = useCallback(async (token) => {
     try {
       const response = await api.get("/tasks/", {
-        headers: { Authorization: `Token ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const sortedAndFilteredTasks = filterAndSortTasks(response.data);
       setTasks(sortedAndFilteredTasks);
     } catch (error) {
       console.error("Erro ao buscar tarefas:", error);
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("access"); // Remove o token inválido
+        navigate("/login"); // Redireciona para a tela de login
+      }
     }
-  };
+  }, [navigate, filter, sortOrder]); // Adicionando dependências
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchTasks(token);
+    const token = getToken();
+    if (!token) {
+      navigate("/login"); // Redireciona se não houver token
+      return;
     }
-  }, [filter, sortOrder]);
+    fetchTasks(token); // Busca as tarefas
+  }, [navigate, fetchTasks]); // Adicionando fetchTasks nas dependências
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      fetchTasks(token); // Busca as tarefas com o token
+    }
+  }, [filter, sortOrder, fetchTasks]); // Adicionando fetchTasks nas dependências
 
   const handleAddTask = async () => {
     if (!newTask.title.trim()) return;
-    const token = localStorage.getItem("token");
+    const token = getToken();
     try {
       const response = await api.post("/tasks/", newTask, {
-        headers: { Authorization: `Token ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTasks((prevTasks) => [response.data, ...prevTasks]);
       setMessage("✅ Tarefa adicionada com sucesso!");
@@ -87,10 +96,10 @@ function TaskList() {
 
   const handleUpdateTask = async () => {
     if (!selectedTask.title.trim()) return;
-    const token = localStorage.getItem("token");
+    const token = getToken();
     try {
       await api.put(`/tasks/${selectedTask.id}/`, selectedTask, {
-        headers: { Authorization: `Token ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(tasks.map((task) => (task.id === selectedTask.id ? selectedTask : task)));
       setMessage("✅ Tarefa atualizada com sucesso!");
@@ -105,10 +114,10 @@ function TaskList() {
 
   const handleDeleteTask = async (id) => {
     if (!window.confirm("Tem certeza que deseja deletar esta tarefa?")) return;
-    const token = localStorage.getItem("token");
+    const token = getToken();
     try {
       await api.delete(`/tasks/${id}/`, {
-        headers: { Authorization: `Token ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(tasks.filter((task) => task.id !== id));
       setMessage("✅ Tarefa deletada com sucesso!");
@@ -122,7 +131,7 @@ function TaskList() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Limpa o token do localStorage
+    localStorage.removeItem("access"); // Limpa o token do localStorage
     navigate("/login"); // Redireciona para a tela de login
   };
 

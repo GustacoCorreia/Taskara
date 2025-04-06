@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import api from "../services/api";
-import "../styles/Login.css"; // Importa os estilos corrigidos
+import "../styles/Login.css";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,8 +14,12 @@ function Login() {
     e.preventDefault();
     try {
       const response = await api.post("/token/", { username, password });
-      localStorage.setItem("token", response.data.token);
-      navigate("/home");/*Direcionamento para a pagina após login */
+
+      // Corrigido: salva os tokens corretamente
+      localStorage.setItem("access", response.data.access);
+      localStorage.setItem("refresh", response.data.refresh);
+
+      navigate("/home"); // Redireciona após login
     } catch (error) {
       alert("Erro ao fazer login. Verifique suas credenciais.");
     }
@@ -46,7 +50,10 @@ function Login() {
                 required
                 placeholder="Digite sua senha"
               />
-              <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+              <span
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -54,7 +61,7 @@ function Login() {
           <button className="button-login">Entrar</button>
         </form>
       </div>
-    </div> 
+    </div>
   );
 }
 
