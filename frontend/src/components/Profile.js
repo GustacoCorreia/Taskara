@@ -8,6 +8,7 @@ function Profile() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("access");
@@ -52,8 +53,10 @@ function Profile() {
 
       if (!response.ok) {
         setMessage(data.error || "Erro ao alterar senha");
+        setIsSuccess(false);
       } else {
         setMessage("Senha alterada com sucesso!");
+        setIsSuccess(true);
         setCurrentPassword("");
         setNewPassword("");
         setShowPasswordForm(false);
@@ -61,6 +64,7 @@ function Profile() {
     } catch (error) {
       console.error("Erro:", error);
       setMessage("Erro ao alterar senha.");
+      setIsSuccess(false);
     }
   };
 
@@ -72,33 +76,43 @@ function Profile() {
         <p><strong>Nome:</strong> {userData.username}</p>
         <p><strong>Email:</strong> {userData.email}</p>
 
-        <button className="change-password-button" onClick={() => setShowPasswordForm(!showPasswordForm)}>
+        <button
+          className="change-password-button"
+          onClick={() => setShowPasswordForm(!showPasswordForm)}
+        >
           {showPasswordForm ? "Cancelar" : "Alterar Senha"}
         </button>
 
         {showPasswordForm && (
-          <form className="password-form" onSubmit={handlePasswordChange}>
+          <form className="change-password-form" onSubmit={handlePasswordChange}>
             <div>
-              <label>Senha Atual:</label>
               <input
                 type="password"
+                placeholder="Senha Atual"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 required
               />
             </div>
             <div>
-              <label>Nova Senha:</label>
               <input
                 type="password"
+                placeholder="Nova Senha"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
               />
             </div>
-            <button type="submit">Salvar Nova Senha</button>
-            {message && <p className="message">{message}</p>}
+            <button className="change-password-button" type="submit">
+              Salvar Nova Senha
+            </button>
           </form>
+        )}
+
+        {message && (
+          <p className={isSuccess ? "success-message" : "error-message"}>
+            {message}
+          </p>
         )}
       </div>
     </div>

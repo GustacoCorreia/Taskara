@@ -3,7 +3,7 @@
 }
 
 .profile-container {
-  margin-left: 260px; /* Corrige sobreposição com Sidebar */
+  margin-left: 260px;
   padding: 2rem;
   background-color: #f5f9ff;
   color: #333;
@@ -11,23 +11,39 @@
   min-height: 100vh;
 }
 
+/* Título centralizado */
 .profile-container h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: #1e90ff;
+  text-align: center;
+  font-size: 2rem;
 }
 
-.profile-container p {
-  margin: 0.5rem 0;
+/* Cartão com dados do usuário */
+.user-info-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.user-info-card p {
   font-size: 1.1rem;
+  margin: 0.5rem 0;
 }
 
+/* Botão de alterar senha */
 .change-password-button {
-  margin-top: 1.5rem;
+  display: block;
+  margin: 0 auto 1.5rem auto;
   background-color: #1e90ff;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
@@ -37,48 +53,65 @@
   background-color: #0f78d1;
 }
 
-/* 🔹 Estilo do formulário de alteração de senha */
+/* Formulário */
 .password-form {
-  margin-top: 20px;
-  background-color: #eaf3ff;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  max-width: 550px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
 }
 
+/* Rótulos */
 .password-form label {
-  display: block;
-  margin-bottom: 5px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
+/* Campos de entrada */
 .password-form input {
-  width: 100%;
-  padding: 8px 10px;
-  margin-bottom: 15px;
+  padding: 18px 16px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  width: 100%;
+  background-color: #f0f8ff;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.password-form button {
+.password-form input:focus {
+  outline: none;
+  border-color: #1e90ff;
+  background-color: #e8f4ff;
+}
+
+/* Botão de salvar */
+.password-form button[type="submit"] {
   background-color: #1e90ff;
   color: white;
-  padding: 10px 15px;
+  padding: 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
+  font-size: 1.1rem;
   cursor: pointer;
-  font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
-.password-form button:hover {
+.password-form button[type="submit"]:hover {
   background-color: #0f78d1;
 }
 
+/* Mensagem */
 .message {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 1rem;
+  font-weight: 600;
   color: green;
+  text-align: center;
 }
