@@ -145,7 +145,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    gap: 10px; /* Adiciona espaço entre os botões */
+    gap: 10px;
 }
 
 .save-button {
@@ -155,7 +155,7 @@
     border-radius: 5px;
     cursor: pointer;
     border: none;
-    flex: 1; /* Os botões ocupam o mesmo tamanho */
+    flex: 1;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
@@ -165,29 +165,29 @@
 }
 
 .cancel-button {
-    background-color: #dc3545; /* Cor vermelha para cancelar */
+    background-color: #dc3545;
     color: white;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     border: none;
-    flex: 1; /* Os botões ocupam o mesmo tamanho */
+    flex: 1;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .cancel-button:hover {
-    background-color: #c82333; /* Cor mais escura no hover */
+    background-color: #c82333;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .delete-button {
-    background-color: #ff7f50; /* Cor laranja-avermelhada para deletar */
+    background-color: #ff7f50;
     color: white;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     border: none;
-    text-align: center; /* Centraliza o texto no botão */
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,7 +195,7 @@
 }
 
 .delete-button:hover {
-    background-color: #e06d37; /* Tom mais escuro de laranja-avermelhado */
+    background-color: #e06d37;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -277,3 +277,66 @@
 .logout-button:hover {
     background-color: #c82333;
 }
+
+/* Tarefas atrasadas */
+.task-item.overdue {
+    background-color: #ffe6e6;
+    border-left: 6px solid #dc3545;
+    animation: shake 0.3s ease-in-out 1;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+/* Texto de prioridade */
+.priority {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+/* Estilos por prioridade */
+.priority-low {
+    color: #1da1f2;
+    background-color: #e7f4ff;
+}
+
+.priority-medium {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.priority-high {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+.deadline-box {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: inline-block;
+  text-align: center;
+}
+
+.in-time-box {
+  background-color: #e6f7ff;
+  color: #007acc;
+  border: 1px solid #b3e0ff;
+}
+
+.overdue-box {
+  background-color: #ffe6e6;
+  color: #cc0000;
+  border: 1px solid #ffcccc;
+}
+

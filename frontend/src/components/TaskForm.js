@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom"; // Para redirecionamento
+import { useNavigate } from "react-router-dom";
 
 function TaskForm({ onTaskAdded, editingTask, onTaskUpdated }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const navigate = useNavigate(); // Usado para redirecionamento
+  const [isFocus, setIsFocus] = useState(false); // 🆕 novo estado
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (editingTask) {
       setTitle(editingTask.title);
       setDescription(editingTask.description);
+      setIsFocus(editingTask.is_focus || false); // 🆕 preenche o estado
     } else {
       setTitle("");
       setDescription("");
+      setIsFocus(false);
     }
   }, [editingTask]);
 
-  // Função para obter o token com fallback
   const getToken = () => {
     return localStorage.getItem("access") || localStorage.getItem("token");
   };
@@ -25,21 +27,21 @@ function TaskForm({ onTaskAdded, editingTask, onTaskUpdated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = getToken(); // Obtendo o token
+    const token = getToken();
     if (!token) {
       console.error("Usuário não autenticado!");
-      navigate("/login"); // Redireciona para a tela de login
+      navigate("/login");
       return;
     }
 
-    const taskData = { title, description };
+    const taskData = { title, description, is_focus: isFocus }; // 🆕 inclui is_focus
 
     try {
       if (editingTask) {
         await api.put(`/tasks/${editingTask.id}/`, taskData, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        onTaskUpdated({ ...editingTask, title, description });
+        onTaskUpdated({ ...editingTask, title, description, is_focus: isFocus });
       } else {
         const response = await api.post("/tasks/", taskData, {
           headers: { Authorization: `Bearer ${token}` },
@@ -49,12 +51,12 @@ function TaskForm({ onTaskAdded, editingTask, onTaskUpdated }) {
 
       setTitle("");
       setDescription("");
+      setIsFocus(false);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        // Caso o token seja inválido ou expirado
         console.error("Token expirado ou inválido!");
-        localStorage.removeItem("access"); // Remove o token inválido
-        navigate("/login"); // Redireciona para o login
+        localStorage.removeItem("access");
+        navigate("/login");
       } else {
         console.error("Erro ao salvar tarefa:", error);
       }
@@ -89,6 +91,20 @@ function TaskForm({ onTaskAdded, editingTask, onTaskUpdated }) {
         />
       </div>
 
+      {/* 🆕 Checkbox Tarefa do Dia */}
+      <div className="flex items-center space-x-3">
+        <input
+          type="checkbox"
+          id="isFocus"
+          checked={isFocus}
+          onChange={(e) => setIsFocus(e.target.checked)}
+          className="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+        />
+        <label htmlFor="isFocus" className="text-gray-700 font-medium">
+          Marcar como Tarefa do Dia
+        </label>
+      </div>
+
       <button
         type="submit"
         className={`w-full p-3 text-white text-lg font-semibold rounded-lg transition 
@@ -102,4 +118,5 @@ function TaskForm({ onTaskAdded, editingTask, onTaskUpdated }) {
 }
 
 export default TaskForm;
+
 
